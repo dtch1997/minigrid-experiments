@@ -24,7 +24,7 @@ from allenact.algorithms.onpolicy_sync.runner import (
 )
 from allenact.base_abstractions.experiment_config import ExperimentConfig
 from allenact.utils.system import HUMAN_LOG_LEVELS, get_logger, init_logging
-
+from distutils.util import strtobool
 
 def get_argument_parser():
     """Creates the argument parser."""
@@ -205,6 +205,15 @@ def get_argument_parser():
         help="disable tensorboard logging",
     )
     parser.set_defaults(disable_tensorboard=False)
+
+    parser.add_argument("--track", type=lambda x: bool(strtobool(x)), default=False, nargs="?", const=True,
+        help="if toggled, this experiment will be tracked with Weights and Biases")
+    parser.add_argument("--wandb-project-name", type=str, default="minigrid-experiments",
+        help="the wandb's project name")
+    parser.add_argument("--wandb-entity", type=str, default=None,
+        help="the entity (team) of wandb's project")
+    parser.add_argument("--wandb-group", type=str, default=None,
+        help="the group to put this experiment in")
 
     parser.add_argument(
         "-a",
@@ -446,6 +455,20 @@ def load_config(args) -> Tuple[ExperimentConfig, Dict[str, str]]:
 
 def main():
     args = get_args()
+
+    if args.track:
+        import wandb, time
+        run_name = f"{args.experiment}__{args.seed}__{int(time.time())}"
+
+        wandb.init(
+            project=args.wandb_project_name,
+            entity=args.wandb_entity,
+            sync_tensorboard=True,
+            config=vars(args),
+            name=run_name,
+            monitor_gym=True,
+            save_code=True,
+        )
 
     init_logging(args.log_level)
 
