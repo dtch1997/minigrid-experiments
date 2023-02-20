@@ -1,0 +1,3 @@
+[submodule "third-party/allenact"]
+	path = third-party/allenact
+	url = git@github.com:dtch1997/allenact.git
