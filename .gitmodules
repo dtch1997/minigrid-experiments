@@ -4,3 +4,6 @@
 [submodule "third-party/minigrid"]
 	path = third-party/minigrid
 	url = git@github.com:Farama-Foundation/Minigrid.git
+[submodule "third-party/rl-starter-files"]
+	path = third-party/rl-starter-files
+	url = git@github.com:lcswillems/rl-starter-files.git
