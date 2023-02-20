@@ -1,3 +1,6 @@
 [submodule "third-party/allenact"]
 	path = third-party/allenact
 	url = git@github.com:dtch1997/allenact.git
+[submodule "third-party/minigrid"]
+	path = third-party/minigrid
+	url = git@github.com:Farama-Foundation/Minigrid.git
